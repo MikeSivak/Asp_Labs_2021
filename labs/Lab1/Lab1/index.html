@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <button type="button" onclick="send('GET')">GET</button>
+    <br />
+    <br />
+    <input type="number" id="post-input" />
+    <button type="button" onclick="send('POST')">POST</button>
+    <br />
+    <br />
+    <input type="number" id="put-input" />
+    <button type="button" onclick="send('PUT')">PUT</button>
+    <br />
+    <br />
+    <button type="button" onclick="send('DELETE')">DELETE</button>
+    <script>
+        send = (method) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open(method, '/r.smn');
+            if (method === 'POST') {
+                var formData = new FormData();
+                formData.append("result", document.getElementById('post-input').value);
+                xhr.send(formData);
+            }
+            else if (method === 'PUT') {
+                var formData = new FormData();
+                formData.append("add", document.getElementById('put-input').value);
+                xhr.send(formData);
+            }
+            else {
+                xhr.send();
+            }
+            xhr.onload = function () {
+                if (xhr.status !== 200) {
+                    alert(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+                } else {
+                    alert(xhr.responseText);
+                }
+            };
+        }
+    </script>
+</body>
+</html>
